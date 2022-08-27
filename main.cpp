@@ -13,7 +13,7 @@ void limpaTela(){
 string retornaPalavraAleatoria(){
 
     // vetor de palavras disponíveis
-    string palavras[3] = {"Abacaxi"," Manga" , "Morango"};
+    string palavras[3] = {"abacaxi","manga" , "morango"};
 
     //Indice gerado no Intervalo (0, 1, 2)
     int indiceAleatorio = rand() %3;
@@ -57,11 +57,12 @@ void jogarSozinho(){
     // Palavra mascarada
     string palavraComMascara = retornaPalavraComMascara(palavra, tamanhoDapalavra);
 
-    //Variáveis principais
+    //Variáveis Gerais
     int tentativas = 0, maximoDeTentativas = 5;
+    int cont = 0;
     char letra;
 
-    while(maximoDeTentativas - tentativas > 0){
+    while(palavra != palavraComMascara && maximoDeTentativas - tentativas > 0){
 
         limpaTela();
 
@@ -71,8 +72,24 @@ void jogarSozinho(){
         cout <<" \nDigite uma letra: ";
         cin >> letra;
 
+        for(cont = 0; cont < tamanhoDapalavra; cont++){
+            if(palavra[cont] == letra){
+
+                palavraComMascara[cont] = palavra[cont];
+            }
+        }
+
         //Almenta uma tentativa realizada
         tentativas++;
+    }
+
+    if(palavra == palavraComMascara){
+
+        limpaTela();
+        cout << "parabens, voce venceu!";
+    }else{
+        limpaTela();
+        cout << "voce perdeu!";
     }
 
 }
