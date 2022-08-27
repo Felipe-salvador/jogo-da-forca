@@ -57,6 +57,7 @@ void jogarSozinho(){
     // Palavra mascarada
     string palavraComMascara = retornaPalavraComMascara(palavra, tamanhoDapalavra);
 
+    //Variáveis principais
     int tentativas = 0, maximoDeTentativas = 5;
     char letra;
 
