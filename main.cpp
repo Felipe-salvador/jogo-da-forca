@@ -38,11 +38,18 @@ string retornaPalavraComMascara(string palavra, int tamanhoDapalavra){
     return palavraComMascara;
 }
 
-void exibeStatus(string palavraComMascara, int tamanhoDapalavra, int tentativasRestantes){
+void exibeStatus(string palavraComMascara, int tamanhoDapalavra, int tentativasRestantes, string letrasJaArriscsdas){
 
         //cout << " A palavra secreta eh: " << palavra << "( tamanho: " << tamanhoDapalavra << ");
         cout << "palavra: " << palavraComMascara << "( tamanho: " << tamanhoDapalavra << ")";
         cout << "\nTentativas Restantes: " << tentativasRestantes;
+
+        int cont;
+        cout << "\nletras arriscadas: ";
+        for(cont = 0; cont < letrasJaArriscsdas.size(); cont++){
+            cout << letrasJaArriscsdas[cont] << ", ";
+        }
+
 
 }
 
@@ -61,27 +68,51 @@ void jogarSozinho(){
     int tentativas = 0, maximoDeTentativas = 5;
     int cont = 0;
     char letra;
+    string letrasJaArriscsdas;
+    bool jaDigitouLetra = false;
 
     while(palavra != palavraComMascara && maximoDeTentativas - tentativas > 0){
 
-        limpaTela();
+        //limpaTela();
 
         // Exibe o status atual do jogo
-        exibeStatus(palavraComMascara, tamanhoDapalavra, maximoDeTentativas - tentativas);
+        exibeStatus(palavraComMascara, tamanhoDapalavra, maximoDeTentativas - tentativas, letrasJaArriscsdas);
 
         cout <<" \nDigite uma letra: ";
         cin >> letra;
 
-        for(cont = 0; cont < tamanhoDapalavra; cont++){
-            if(palavra[cont] == letra){
+        for(cont = 0; cont < tentativas; cont++){
+
+            if(letrasJaArriscsdas[cont] == letra){
+
+                cout << "Essa letra ja foi digitada!\n";
+
+                jaDigitouLetra = true;
+            }
+        }
+
+        //se for uma letra nova
+        if(jaDigitouLetra == false){
+
+                letrasJaArriscsdas += letra;
+
+              for(cont = 0; cont < tamanhoDapalavra; cont++){
+
+               if(palavra[cont] == letra){
 
                 palavraComMascara[cont] = palavra[cont];
             }
+
         }
 
         //Almenta uma tentativa realizada
         tentativas++;
-    }
+
+        }
+
+
+
+}
 
     if(palavra == palavraComMascara){
 
@@ -93,6 +124,7 @@ void jogarSozinho(){
     }
 
 }
+
 
 void menuInicial(){
 
