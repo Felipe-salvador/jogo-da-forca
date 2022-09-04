@@ -52,9 +52,10 @@ void exibeStatus(string palavraComMascara, int tamanhoDapalavra, int tentativasR
         }
 
 
+
 }
 
-void jogarSozinho(){
+int jogarSozinho(){
 
     //Palavra a ser adivinhada
     string palavra = retornaPalavraAleatoria();
@@ -66,11 +67,13 @@ void jogarSozinho(){
     string palavraComMascara = retornaPalavraComMascara(palavra, tamanhoDapalavra);
 
     //Variáveis Gerais
-    int tentativas = 0, maximoDeTentativas = 5;
+    int tentativas = 0, maximoDeTentativas = 12;
     int cont = 0;
     char letra;
+    char opcao;
     string letrasJaArriscsdas;
     string mensagem = "Bem vido ao jogo!";
+    string palavraArriscada;
     bool jaDigitouLetra = false, acertouLetra = false;
 
     while(palavra != palavraComMascara && maximoDeTentativas - tentativas > 0){
@@ -80,8 +83,17 @@ void jogarSozinho(){
         // Exibe o status atual do jogo
         exibeStatus(palavraComMascara, tamanhoDapalavra, maximoDeTentativas - tentativas, letrasJaArriscsdas, mensagem);
 
-        cout <<" \nDigite uma letra: ";
+        cout <<" \nDigite uma letra (ou digite 1 para arriscar a palavra): ";
         cin >> letra;
+
+        if(letra == '1'){
+            cin >> palavraArriscada;
+            if(palavraArriscada == palavra){
+                palavraComMascara = palavraArriscada;
+            }else{
+                tentativas = maximoDeTentativas;
+            }
+        }
 
         for(cont = 0; cont < tentativas; cont++){
 
@@ -100,7 +112,7 @@ void jogarSozinho(){
 
               for(cont = 0; cont < tamanhoDapalavra; cont++){
 
-                if(palavra[cont] == letra){
+                if(palavra[cont] == tolower(letra)){
 
                   palavraComMascara[cont] = palavra[cont];
 
@@ -116,6 +128,7 @@ void jogarSozinho(){
              mensagem = "voce errou uma aletra!";
          }else{
              mensagem = "voce acertou uma letra!";
+
          }
 
          //Almenta uma tentativa realizada
@@ -129,13 +142,20 @@ void jogarSozinho(){
 
     }
 
+
     if(palavra == palavraComMascara){
 
-        limpaTela();
-        cout << "parabens, voce venceu!";
+        //limpaTela();
+        cout << "\nparabens, voce venceu!";
+        cout << "\ndeseja continuar? s/n: ";
+        cin >> opcao;
+        return opcao;
+
     }else{
-        limpaTela();
-        cout << "voce perdeu!";
+        cout << "\nvoce perdeu!";
+        cout << "\ndeseja continuar? s/n: ";
+        cin >> opcao;
+        return opcao;
     }
 
 }
@@ -154,11 +174,14 @@ void menuInicial(){
         cout << "\n Escolha uma opcao e tecle ENTER: ";
         cin >> opcao;
 
+
         switch(opcao)
         {
         case 1:
             // Iniciar jogo
-            jogarSozinho();
+            if(jogarSozinho() == 's'){
+                 menuInicial();
+            }
             break;
         case 2:
             cout << "Informacoes do jogo";
@@ -172,6 +195,7 @@ void menuInicial(){
 
 int main()
 {
+
     // Para gerar números aleatorio junto com a biblioteca: <time.h>
     srand((unsigned)time (NULL));
 
