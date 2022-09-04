@@ -55,10 +55,19 @@ void exibeStatus(string palavraComMascara, int tamanhoDapalavra, int tentativasR
 
 }
 
-int jogarSozinho(){
+int jogar(int numeroDeJogadores){
 
     //Palavra a ser adivinhada
-    string palavra = retornaPalavraAleatoria();
+    string palavra;
+
+    if(numeroDeJogadores == 1){
+
+         //Palavra a ser adivinhada
+         palavra = retornaPalavraAleatoria();
+    }else{
+        cout << "\nDigite uma palavra: ";
+        cin >> palavra;
+    }
 
     // Vai Retornar o tamanho da palavra função .size();
     int tamanhoDapalavra = palavra.size();
@@ -108,7 +117,8 @@ int jogarSozinho(){
         //se for uma letra nova
         if(jaDigitouLetra == false){
 
-              letrasJaArriscsdas += letra;
+              //Incrementa as letras
+              letrasJaArriscsdas += tolower(letra);
 
               for(cont = 0; cont < tamanhoDapalavra; cont++){
 
@@ -168,9 +178,10 @@ void menuInicial(){
     {
         limpaTela();
         cout << "Bem vindo ao jogo";
-        cout << "\n1 - Jogar";
-        cout << "\n2 - sobre";
-        cout << "\n3 - sair";
+        cout << "\n1 - Jogar sozinho";
+        cout << "\n2 - Jogar em dupla";
+        cout << "\n3 - sobre";
+        cout << "\n4 - sair";
         cout << "\n Escolha uma opcao e tecle ENTER: ";
         cin >> opcao;
 
@@ -179,15 +190,36 @@ void menuInicial(){
         {
         case 1:
             // Iniciar jogo
-            if(jogarSozinho() == 's'){
+            if(jogar(1) == 's'){
                  menuInicial();
             }
             break;
         case 2:
-            cout << "Informacoes do jogo";
+            // Iniciar jogo
+            if(jogar(2) == 's'){
+                 menuInicial();
+            }
             break;
         case 3:
-            cout << "Ate mais!";
+
+            limpaTela();
+            cout << "jogo desenvolvido por Felipe em 2022";
+            cout << "\n1 - voltar";
+            cout << "\n2 - sair\n";
+            cin >> opcao;
+            if(opcao == 1){
+                menuInicial();
+            }
+
+            break;
+        case 4:
+            limpaTela();
+            cout << "Digite 1 para sair: ";
+            cin >> opcao;
+            if(opcao == 1){
+                cout << "Ate mais";
+                break;
+            }
             break;
         }
     }
